@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jjdata</title>
+	<style>
+		table {
+			width: 900px;
+		}
+		tr {
+			width: 100%;
+			text-align: center;
+		}
+		th {
+			width: 300px;
+			background-color: rgba(0,0,0,0.4);
+		}
+		td {
+			width: 300px;
+		}
+		.type1 {
+			background-color: #259cef5e;
+		}
+		.type2 {
+			background-color: red;
+		}
+
+		.block {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	123
+	<table>
+		<tr>
+			<th>代号</th><th>名字</th><th>类型</th>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+
+	<!-- <button id="go">Go</button> <button id="stop">STOP!</button>
+	<div class="block"></div><button id="go">Go</button> <button id="stop">STOP!</button>
+	<div class="block"></div> -->
+
+	<script src="../../jquery-3.3.1.js"></script>
+	<!-- <script>
+		$("#go").click(function(){
+		  $(".block").animate({left: '+200px'}, 5000);
+		});
+
+		$("#stop").click(function(){
+		  $(".block").stop();
+		});
+	</script> -->
+	<script>
+		$(function () {
+			$.ajax({
+			    type: "GET",
+			    url: "../codeData.json",
+			    data: {},
+			    success: function(msg){
+			    	// console.log(JSON.parse(msg));
+			   		// console.log(msg);
+			    },
+			    error: function (err) {
+			    	//console.log(err);
+			    },
+			    complete: function (res) {
+			    	console.log(res);
+			    	if (res.readyState == 4 && res.status == 200) {
+			    		var jo = JSON.parse(res.responseText);
+			    		if (jo.code == 1) {
+			    			var data = jo.data;
+			    			var typejson = data.typename;
+			    			var html = "";
+			    			var classType = "";
+			    			var codesArr = (data.codes).split(',');
+			    			var nameArr = (data.name).split(',');
+			    			var typeArr = (data.type).split(',');
+			    			var length = codesArr.length;
+			    			for (var i=0; i<length; i++) {
+			    				if (typeArr[i] == 1) {
+			    					//console.log(typeArr[i]);
+			    					classType = "type1";
+			    				} else {
+			    					classType = "";
+			    				}
+			    				// if (typeArr[i] == 2) {
+			    				// 	classType = "type2";
+			    				// }
+			    				html = html + '<tr class="'+ classType +'"><td>' + codesArr[i] + '</td><td>' + nameArr[i] + '</td><td>' + typejson[typeArr[i]] + '</td></tr>';
+			    			}
+			    			$('table').append(html);
+			    		}
+
+			    	}
+			    }
+			});
+
+		});
+	</script>
+</body>
+</html>
